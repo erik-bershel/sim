@@ -18,13 +18,20 @@ jobs:
     - name: Check Xcode version
       run: xcodebuild -version
 
-    - name: Set up Xcode
-      run: sudo xcode-select --switch /Applications/Xcode_16.2.app/Contents/Developer
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: '16.2'
 
-    - name: List all available simulators (debugging)
+    - name: List info (debugging)
       run: |
+        echo "Xcode version..."
+        xcodebuild -version
+        echo "XcodeCLT version..."
+        pkgutil --pkg-info=com.apple.pkg.CLTools_Executables
+        echo "Xcode SDKs..."
+        xcodebuild -sdk -version
         echo "Listing all available simulators..."
-        xcrun simctl list devices
+        xcrun simctl list
 
 #    - name: Create iPhone 15 pro simulator if not exists
 #      run: |
